@@ -1,0 +1,86 @@
+[
+  {
+    "id": 10657713,
+    "name": "NEW KANTAMANTO MARKET",
+    "address": "266 EDDYSTONE AVE, Unit-0",
+    "type": "Food Depot"
+  },
+  {
+    "id": 10752656,
+    "name": "# HASHTAG INDIA RESTAURANT",
+    "address": "1871 O'CONNOR DR",
+    "type": "Food Take Out"
+  },
+  {
+    "id": 9008018,
+    "name": "'K' STORE",
+    "address": "99 CARLTON ST",
+    "type": "Food Store (Convenience/Variety)"
+  },
+  {
+    "id": 10510325,
+    "name": "0109 Dessert + Chocolate",
+    "address": "2190 MCNICOLL AVE, -109",
+    "type": "Restaurant"
+  },
+  {
+    "id": 10776009,
+    "name": "1 HOTEL - HARRIET'S",
+    "address": "550 WELLINGTON ST W",
+    "type": "Restaurant"
+  },
+  {
+    "id": 10776015,
+    "name": "1 HOTEL TORONTO - 1 KITCHEN",
+    "address": "550 WELLINGTON ST W",
+    "type": "Restaurant"
+  },
+  {
+    "id": 10776008,
+    "name": "1 HOTEL TORONTO - CASA MADERA",
+    "address": "550 WELLINGTON ST W",
+    "type": "Restaurant"
+  },
+  {
+    "id": 10776019,
+    "name": "1 HOTEL TORONTO - FLORA LOUNGE",
+    "address": "550 WELLINGTON ST W",
+    "type": "Restaurant"
+  },
+  {
+    "id": 10776013,
+    "name": "1 HOTEL TORONTO - MAIN PRODUCTION KITCHEN",
+    "address": "550 WELLINGTON ST W",
+    "type": "Restaurant"
+  },
+  {
+    "id": 10776014,
+    "name": "1 HOTEL TORONTO - STAFF CAFETERIA 'The Nest'",
+    "address": "550 WELLINGTON ST W",
+    "type": "Restaurant"
+  },
+  {
+    "id": 10500438,
+    "name": "1 PLUS 1 PIZZA",
+    "address": "361 OAKWOOD AVE",
+    "type": "Food Take Out"
+  },
+  {
+    "id": 10325728,
+    "name": "1-SATELLITE KITCHEN",
+    "address": "1 BLUE JAYS WAY",
+    "type": "Food Take Out"
+  },
+  {
+    "id": 10556602,
+    "name": "100% Korean",
+    "address": "4779 STEELES AVE E",
+    "type": "Food Take Out"
+  },
+  {
+    "id": 10588973,
+    "name": "100% SALVADORENO",
+    "address": "612 TRETHEWEY DR",
+    "type": "Restaurant"
+  }
+]
