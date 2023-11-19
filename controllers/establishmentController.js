@@ -8,17 +8,12 @@ exports.addEstablishment = async (req, res) => {
       !req.body.status ||
       !req.body.address
     ) {
-      return res
-        .status(400)
-        .json({ message: 'Please provide the required information' });
+      return res.status(400).json({
+        message: 'Please provide the required information in the request body',
+      });
     }
 
-    const id = req.body.id;
-    const name = req.body.name;
-    const address = req.body.address;
-    const status = req.body.status;
-    const lat = req.body.lat;
-    const lng = req.body.lng;
+    const { id, name, address, status, lat, lng } = req.body;
 
     await knex('establishments').insert({
       id,
@@ -46,11 +41,10 @@ exports.getAllEstablishments = async (req, res) => {
   const order = req.query.order;
   const sort = req.query.sort;
 
-  // handle queries
   if (searchTerm) {
     try {
       const searchResults = await knex('establishments')
-        .select('name', 'address', 'status')
+        .select('id', 'name', 'address', 'status', 'lat', 'lng')
         .whereILike('name', `%${searchTerm}%`)
         .orWhereILike('address', `%${searchTerm}%`)
         .orWhereILike('status', `%${searchTerm}%`)
@@ -68,7 +62,7 @@ exports.getAllEstablishments = async (req, res) => {
   } else {
     try {
       const data = await knex('establishments')
-        .select('name', 'address', 'status')
+        .select('id', 'name', 'address', 'status', 'lat', 'lng')
         .orderBy(`${order || 'name'}`, `${sort || 'asc'}`);
 
       return res.json({ length: data.length, data: data });
@@ -84,16 +78,18 @@ exports.getAllEstablishments = async (req, res) => {
 exports.getEstablishment = async (req, res) => {
   try {
     const establishment = await knex('establishments')
-      .select('name', 'address', 'status')
+      .select('id', 'name', 'address', 'status', 'lat', 'lng')
       .where({ id: req.params.establishmentId })
       .first();
 
     establishment
       ? res.json(establishment)
-      : res.status(404).json({ message: 'Establishment not found' });
+      : res.status(404).json({
+          message: `No establishment with ID ${establishmentId}`,
+        });
   } catch (err) {
     return res.status(500).json({
-      message: 'Unable to fetch establishment from database',
+      message: `Unable to fetch establishment with ID ${establishmentId} from database`,
       error: err,
     });
   }
@@ -107,7 +103,7 @@ exports.updateEstablishment = async (req, res) => {
 
     if (rowsUpdated === 0) {
       return res.status(400).json({
-        message: `Establishment with id 
+        message: `Establishment with ID 
     ${req.params.establishmentId} not found`,
       });
     }
@@ -121,7 +117,6 @@ exports.updateEstablishment = async (req, res) => {
     return res.json({
       message: 'OK',
       updated: updatedEstablishment,
-      body: req.body,
     });
   } catch (err) {
     return res
@@ -136,16 +131,14 @@ exports.deleteEstablishment = async (req, res) => {
       .where({ id: req.params.establishmentId })
       .delete();
 
-    if (rowsDeleted === 0) {
-      return res.status(404).json({
-        message: `Establishment with id ${req.params.establishmentId} not found`,
-      });
-    }
-
-    return res.sendStatus(204);
+    rowsDeleted === 0
+      ? res.status(404).json({
+          message: `Establishment with id ${req.params.establishmentId} not found`,
+        })
+      : res.sendStatus(204);
   } catch (err) {
     return res.status(500).json({
-      message: `Unable to delete establishment with id ${req.params.establishmentId} from database`,
+      message: `Unable to delete establishment with ID ${req.params.establishmentId} from database`,
       error: err,
     });
   }

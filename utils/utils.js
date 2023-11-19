@@ -8,12 +8,14 @@ fetchEstablishments = () => {
 
   ['0', ...alphabets].forEach(async (alphabet) => {
     try {
+      console.log(`fetching ${alphabet}`);
       const { data } = await axios.get(
         `${process.env.BASE_API_URL}${alphabet}`
       );
 
       try {
-        populateDatabase(data);
+        console.log(`populating ${alphabet}`);
+        await populateEstablishmentsDatabase(data);
       } catch (err) {
         console.log({
           message: `Unable to populate database with index ${alphabet}`,
@@ -28,9 +30,9 @@ fetchEstablishments = () => {
     }
   });
 };
-// fetchEstablishments();
+fetchEstablishments();
 
-const populateDatabase = async (establishments) => {
+const populateEstablishmentsDatabase = async (establishments) => {
   establishments.forEach(async (establishment) => {
     const {
       estId: id,
