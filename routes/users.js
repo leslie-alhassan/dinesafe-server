@@ -5,17 +5,17 @@ const auth = require('../middleware/auth');
 // POST /register
 // - Creates a new user.
 // - Expected body: { username, email, password }
-router.post('/register', userController.createUser);
+router.post('/register', userController.registerUser);
 
 // POST /login
 // -   Generates and responds with a JWT for the user to use for future authorization.
-// -   Expected body: { email, password }
+// -   Expected body: { username, password }
 // -   Response format: { token: "JWT_TOKEN_HERE" }
 router.post('/login', userController.loginUser);
 
 // GET /current
-// - Responds with user data about currently logged in user
-router.get('/current', auth.authorize, userController.getLoggedInUser);
+// - Responds with data about currently logged in user
+router.get('/profile', auth.authorize, userController.getLoggedInUser);
 
 router.get('/', userController.getAllUsers);
 router.get('/:userId', userController.getUser);

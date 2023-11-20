@@ -2,7 +2,7 @@ const knex = require('knex')(require('../knexfile'));
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-exports.createUser = async (req, res) => {
+exports.registerUser = async (req, res) => {
   try {
     if (!req.body.username || !req.body.email || !req.body.password) {
       return res.status(400).json({
@@ -28,9 +28,10 @@ exports.createUser = async (req, res) => {
 
     return res.json({ message: 'Registered successfully', added: newUser });
   } catch (err) {
+    const { sqlMessage, sql } = err;
     return res.status(500).json({
       message: `Failed registration. Unable to add '${req.body.username}' to database`,
-      error: err,
+      error: { sqlMessage, sql },
     });
   }
 };
@@ -42,6 +43,7 @@ exports.loginUser = async (req, res) => {
     const user = await knex('users')
       .select()
       .where({ username: username })
+      .orWhere({ email: username })
       .first();
 
     if (!user) {
@@ -59,7 +61,8 @@ exports.loginUser = async (req, res) => {
         email: user.email,
         bio: user.bio,
       },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      { expiresIn: '14d' }
     );
     return res.json({ token });
   } catch (err) {
@@ -109,7 +112,11 @@ exports.getLoggedInUser = async (req, res) => {
     const user = await knex('users').where({ id: req.token.id }).first();
     delete user.password;
     res.json(user);
-  } catch (error) {}
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: 'Unable to get logged in user', error: err });
+  }
 };
 
 exports.getUser = async (req, res) => {

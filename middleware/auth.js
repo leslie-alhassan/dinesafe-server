@@ -14,11 +14,9 @@ exports.authorize = (req, res, next) => {
     req.token = payload;
     next();
   } catch (err) {
-    return res
-      .status(401)
-      .json({
-        message: 'ACCESS DENIED: Invalid authorization token',
-        error: err,
-      });
+    return res.status(401).json({
+      message: 'ACCESS DENIED: Invalid authorization token',
+      error: err,
+    });
   }
 };
