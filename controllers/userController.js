@@ -3,13 +3,30 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.registerUser = async (req, res) => {
-  try {
-    if (!req.body.username || !req.body.email || !req.body.password) {
-      return res.status(400).json({
-        message: 'Please provide the required information in the request body',
-      });
-    }
+  // validate inputs
+  if (!req.body.email) {
+    return res.status(400).json('Please provide an email address');
+  } else if (!req.body.username) {
+    return res.status(400).json('Please provide a username');
+  } else if (!req.body.password) {
+    return res.status(400).json('Please provide a password');
+  }
 
+  // verify that user doesn't already exist and that the username is available
+  const user = await knex('users')
+    .where({ email: req.body.email })
+    .orWhere({ username: req.body.username })
+    .first();
+
+  if (user) {
+    if (user.email === req.body.email) {
+      return res.status(400).json('An account with this email already exists');
+    } else if (user.username === req.body.username) {
+      return res.status(400).json('Sorry, that username is already taken');
+    }
+  }
+
+  try {
     const { username, email, password, github_id, google_id, avatar_url, bio } =
       req.body;
 
@@ -47,7 +64,7 @@ exports.loginUser = async (req, res) => {
       .first();
 
     if (!user) {
-      return res.status(400).json('The username is incorrect');
+      return res.status(400).json('The email or username is incorrect');
     }
 
     if (!bcrypt.compareSync(password, user.password)) {
