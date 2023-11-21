@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 // POST /register
 // - Creates a new user.
 // - Expected body: { username, email, password }
-router.post('/register', userController.registerUser);
+router.post('/register', auth.register, userController.registerUser);
 
 // POST /login
 // -   Generates and responds with a JWT for the user to use for future authorization.
