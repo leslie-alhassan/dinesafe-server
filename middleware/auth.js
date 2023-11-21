@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const knex = require('knex')(require('../knexfile'));
+const isEmail = require('validator/lib/isEmail');
 
 // middleware to handle
 exports.authorize = (req, res, next) => {
@@ -32,6 +33,10 @@ exports.register = async (req, res, next) => {
     return res.status(400).json('Please provide a username');
   } else if (!req.body.password) {
     return res.status(400).json('Please provide a password');
+  }
+
+  if (!isEmail(req.body.email)) {
+    return res.status(400).json('Please provide a valid email address');
   }
 
   // verify that user doesn't already exist and that the username is available
