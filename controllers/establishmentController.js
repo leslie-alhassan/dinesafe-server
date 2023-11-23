@@ -85,11 +85,11 @@ exports.getEstablishment = async (req, res) => {
     establishment
       ? res.json(establishment)
       : res.status(404).json({
-          message: `No establishment with ID ${establishmentId}`,
+          message: `No establishment with ID ${req.params.establishmentId}`,
         });
   } catch (err) {
     return res.status(500).json({
-      message: `Unable to fetch establishment with ID ${establishmentId} from database`,
+      message: `Unable to fetch establishment with ID ${req.params.establishmentId} from database`,
       error: err,
     });
   }
