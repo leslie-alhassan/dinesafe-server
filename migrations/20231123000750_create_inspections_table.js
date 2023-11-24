@@ -4,10 +4,11 @@
  */
 exports.up = function (knex) {
   return knex.schema.createTable('inspections', (table) => {
-    table.integer('id').primary().notNullable();
-    table.integer('establishment_id').notNullable();
-    table.string('inspection_date').notNullable();
-    table.string('status').notNullable();
+    table.increments('id').primary();
+    table.integer('inspection_id');
+    table.integer('establishment_id');
+    table.string('inspection_date');
+    table.string('status');
     table.text('inspection_details');
     table.string('severity');
     table.string('action');

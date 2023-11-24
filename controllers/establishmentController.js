@@ -1,3 +1,5 @@
+const { parse } = require('dotenv');
+
 const knex = require('knex')(require('../knexfile'));
 
 exports.addEstablishment = async (req, res) => {

@@ -2,19 +2,14 @@ const knex = require('knex')(require('../knexfile'));
 
 exports.addInspectionDetails = async (req, res) => {
   try {
-    if (
-      !req.body.id ||
-      !req.body.establishment_id ||
-      !req.body.inspection_date ||
-      !req.body.status
-    ) {
+    if (!req.body.establishment_id) {
       return res.status(400).json({
-        message: 'Please provide the required information in the request body',
+        message: 'Please provide an establishment ID',
       });
     }
 
     const {
-      id,
+      inspection_id,
       establishment_id,
       inspection_date,
       status,
@@ -26,8 +21,8 @@ exports.addInspectionDetails = async (req, res) => {
       establishment_type,
     } = req.body;
 
-    await knex('inspections').insert({
-      id,
+    const [newInspectionId] = await knex('inspections').insert({
+      inspection_id,
       establishment_id,
       inspection_date,
       status,
@@ -40,7 +35,7 @@ exports.addInspectionDetails = async (req, res) => {
     });
 
     const newInspectionDetails = await knex('inspections').where({
-      id: req.body.id,
+      id: newInspectionId,
     });
 
     return res.json({ message: 'OK', added: newInspectionDetails });
@@ -69,9 +64,9 @@ exports.getInspectionDetails = async (req, res) => {
   try {
     const inspections = await knex('inspections')
       .where({
-        id: req.params.establishmentId,
+        establishment_id: req.params.establishmentId,
       })
-      .orderBy('inspection_date', 'asc');
+      .orderBy('inspection_date', 'desc');
 
     inspections
       ? res.json(inspections)
