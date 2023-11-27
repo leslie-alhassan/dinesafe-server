@@ -1,5 +1,3 @@
-const { parse } = require('dotenv');
-
 const knex = require('knex')(require('../knexfile'));
 
 exports.addEstablishment = async (req, res) => {
@@ -135,7 +133,7 @@ exports.deleteEstablishment = async (req, res) => {
 
     rowsDeleted === 0
       ? res.status(404).json({
-          message: `Establishment with id ${req.params.establishmentId} not found`,
+          message: `No establishment with ID ${req.params.establishmentId} found`,
         })
       : res.sendStatus(204);
   } catch (err) {

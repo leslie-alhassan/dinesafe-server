@@ -68,11 +68,7 @@ exports.getInspectionDetails = async (req, res) => {
       })
       .orderBy('inspection_date', 'desc');
 
-    inspections
-      ? res.json(inspections)
-      : res.status(400).json({
-          message: `No establishment with ID ${req.params.establishmentId}`,
-        });
+    res.json(inspections);
   } catch (err) {
     return res.status(500).json({
       message: `Unable to fetch inspection details for establishment with ID ${req.params.establishmentId} from database`,

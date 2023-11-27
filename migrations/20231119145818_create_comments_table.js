@@ -7,7 +7,8 @@ exports.up = function (knex) {
     table.increments('id').primary();
     table.integer('establishment_id').notNullable();
     table.integer('user_id').unsigned().notNullable();
-    table.text('comment').notNullable();
+    table.text('username').notNullable();
+    table.string('comment').notNullable();
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table
       .timestamp('updated_at')

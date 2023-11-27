@@ -1,5 +1,4 @@
 const express = require('express');
-const expressSession = require('express-session');
 const cors = require('cors');
 const helmet = require('helmet');
 require('dotenv').config();
@@ -19,6 +18,7 @@ app.use(helmet());
 app.use('/api/establishments', require('./routes/establishments'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/inspections', require('./routes/inspections'));
+app.use('/api/comments', require('./routes/comments'));
 
 app.get('/', (_req, res) => {
   res.status(200).send({ message: 'ok' });
