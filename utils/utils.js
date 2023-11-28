@@ -17,13 +17,13 @@ fetchEstablishments = () => {
         console.log(`populating ${alphabet}`);
         await populateEstablishmentsDatabase(data);
       } catch (err) {
-        console.log({
+        console.error({
           message: `Unable to populate database with index ${alphabet}`,
           error: err,
         });
       }
     } catch (err) {
-      console.log({
+      console.error({
         message: `Unable to fetch index ${alphabet}`,
         error: err,
       });

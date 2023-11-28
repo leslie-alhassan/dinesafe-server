@@ -25,6 +25,6 @@ app.get('/', (_req, res) => {
 });
 
 app.listen(port, (err) => {
-  if (err) console.log({ error: err });
+  if (err) console.error({ error: err });
   console.log(`🚀 Express running on ${port}`);
 });
